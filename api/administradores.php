@@ -1,22 +1,24 @@
 <?php
 
-header('Access-Control-Allow-Origin: *');
-header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept");
-header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE');
-
 $post = json_decode(file_get_contents('php://input'), true);
+$datos = $post['datos'];
+
+include_once '../config/header.php';
+include_once '../clases/c_Administradores.php';
+
 $res;
 
 switch ($post['accion']) {
   case 'agregar':
-    $d = $post['datos'];
-    if ($d['nombre'] == '' || $d['usuario'] == '' || $d['password'] == '') {
+    if ($datos['nombre'] == '' || $datos['usuario'] == '' || $datos['password'] == '') {
       
       $res['estado'] = 'error';
       $res['err_id'] = '1';
       $res['msg'] = 'campos vacios';
       
     } else {
+      
+      Administradores::agregar($conn->dbh, $datos);
       
       $res['estado'] = 'ok';
       $res['msg'] = 'Alumno agregado';
