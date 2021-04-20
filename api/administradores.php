@@ -1,12 +1,7 @@
 <?php
 
-$post = json_decode(file_get_contents('php://input'), true);
-$datos = $post['datos'];
-
 include_once '../config/header.php';
 include_once '../clases/c_Administradores.php';
-
-$res;
 
 switch ($post['accion']) {
   case 'agregar':

@@ -7,6 +7,8 @@ header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE');
 include_once 'funciones.php';
 include_once 'db_conn.php';
 
+$post = json_decode(file_get_contents('php://input'), true);
+
 $conn = new ConexionDB();
 
 /* if (!funciones::revisarEstadoLogin($conn, $datos['auth'])) {
