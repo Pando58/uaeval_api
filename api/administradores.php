@@ -1,7 +1,7 @@
 <?php
 
 include_once '../config/header.php';
-include_once '../clases/c_Administradores.php';
+include_once '../clases/cAdministradores.php';
 
 switch ($post['accion']) {
   case 'agregar':
