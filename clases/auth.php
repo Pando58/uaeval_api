@@ -8,7 +8,7 @@ class Auth {
   private static $aud = null;
   private static $exp = (60 * 60);
 
-  public static function login($datos) {
+  public static function generarToken($datos) {
     $t = time();
     
     $token = array(
