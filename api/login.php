@@ -2,8 +2,6 @@
 
 require_once '../config/header.php';
 require_once '../clases/status.php';
-require_once '../clases/auth.php';
-require_once '../vendor/autoload.php';
 
 $user = $post['usuario'];
 $pass = $post['password'];
