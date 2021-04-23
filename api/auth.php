@@ -19,6 +19,16 @@ if (!getAuthorizationHeader()) {
     header('HTTP/1.0 400 Bad Request');
   } else {
     // Validar token
+    try {
+      AuthToken::validarToken($jwt);
+
+      header('Content-Type: application/json');
+
+      echo json_encode(AuthToken::obtenerDatosToken($jwt));
+    } catch (Exception $e) {
+      header('HTTP/1.1 401 Unauthorized');
+      echo $e->getMessage();
+    }
   }
 }
 

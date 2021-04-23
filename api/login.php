@@ -3,37 +3,59 @@
 require_once '../config/header.php';
 require_once '../clases/status.php';
 
-$user = $post['usuario'];
-$pass = $post['password'];
-$admin = $post['admin'];
+header('Content-Type: application/json');
 
-$res;
+// Evitar error de CORS
+if ($_SERVER['REQUEST_METHOD'] == "OPTIONS") {
+  header("HTTP/1.1 200 OK");
+  exit;
+}
 
-if (!$user || !$pass) {
-  $res = status::error(1, 'campos incompletos');
-} else {
+try {
+
+  $res = ['token' => login($conn, $post['usuario'], $post['password'], $post['admin'])];
+  echo json_encode($res);
+
+} catch (Exception $e) {
+
+  if ($e->getCode() == 1) {
+    header('HTTP/1.0 400 Bad Request');
+  } else {
+    header('HTTP/1.1 401 Unauthorized');
+  }
+
+  echo json_encode([
+    'msg' => $e->getMessage(),
+    'code' => $e->getCode()
+  ]);
+  
+}
+
+function login($conn, $user, $pass, $admin) {
+  if (!$user || !$pass) {
+    throw new Exception('Campos incompletos', 1);
+  }
+  
   $usuario = funciones::obtenerUsuario($conn->dbh, $user);
   
   if ($usuario == null) {
-    $res = status::error(2, 'usuario inexistente');
-  } else {
-    if (!password_verify($pass, $usuario['password'])) {
-      $res = status::error(3, 'datos de ingreso incorrectos');
-    } else if ($admin != $usuario['es_administrador']) {
-      $res = status::error(4, 'la propiedad de administrador no coincide');
-    } else {
-      // Login valido - enviar token
-      $res = status::ok(array(
-        'token' => Auth::generarToken([
-          'id' => $usuario['id'],
-          'usuario' => $usuario['usuario'],
-          'admin' => $usuario['es_administrador']
-        ])
-      ));
-    }
+    throw new Exception('Usuario inexistente', 2);
   }
-}
+  
+  if (!password_verify($pass, $usuario['password'])) {
+    throw new Exception('Datos de ingreso incorrectos', 3);
+  }
 
-echo json_encode($res);
+  if ($admin != $usuario['es_administrador']) {
+    throw new Exception('La propiedad de administrador no coincide', 4);
+  }
+
+  // Login valido - enviar token
+  return AuthToken::generarToken([
+    'id' => $usuario['id'],
+    'usuario' => $usuario['usuario'],
+    'admin' => $usuario['es_administrador']
+  ]);
+}
 
 ?>

@@ -2,7 +2,7 @@
 
 use Firebase\JWT\JWT;
 
-class Auth {
+class AuthToken {
   private static $key = 'unialvae';
   private static $encrypt = ['HS256'];
   private static $aud = null;
@@ -12,6 +12,7 @@ class Auth {
     $t = time();
     
     $token = array(
+      'iat' => $t,
       'exp' => $t + self::$exp,
       'aud' => self::Aud(),
       'data' => $datos
@@ -20,7 +21,7 @@ class Auth {
     return JWT::encode($token, self::$key);
   }
 
-  public static function validar($token) {
+  public static function validarToken($token) {
     if (empty($token)) {
       throw new Exception('El token no es valido');
     }
@@ -32,7 +33,7 @@ class Auth {
     }
   }
 
-  public static function obtenerDatos($token) {
+  public static function obtenerDatosToken($token) {
     return JWT::decode($token, self::$key, self::$encrypt);
   }
 
