@@ -1,59 +1,91 @@
 <?php
 
-class Administradores {
-  public static function agregar($dbh, $datos) {
-    // Usuario
-    $query = 'INSERT INTO usuarios (usuario, nombres, apellido_p, apellido_m, password, es_administrador) VALUES (:usuario, :nombres, :ap_p, :ap_m, :pass, true)';
-      
-    $hash_pass = password_hash($datos['password'], PASSWORD_DEFAULT);
+include_once '../clases/cRecurso.php';
+
+class Administradores extends Recurso {
+  public function crear($datos) {
+    $this->validarEstructura($datos);
     
-    $stmt = $dbh->prepare($query);
-    $stmt->bindParam(':usuario', $datos['usuario']);
-    $stmt->bindParam(':nombres', $datos['nombre']);
-    $stmt->bindParam(':ap_p', $datos['apellido_p']);
-    $stmt->bindParam(':ap_m', $datos['apellido_m']);
-    $stmt->bindParam(':pass', $hash_pass);
-    $stmt->execute();
-    
-    // Permisos
-    $query = 'INSERT INTO permisos (
-      id_usuario,
-      alumnos_editar,
-      administradores_editar,
-      grupos_editar,
-      docentes_editar,
-      categorias_editar,
-      reactivos_editar
-    ) VALUES (
-      :id_usuario,
-      :alumnos_editar,
-      :administradores_editar,
-      :grupos_editar,
-      :docentes_editar,
-      :categorias_editar,
-      :reactivos_editar
-    )';
-    
-    $insID = $dbh->lastInsertId();
-    
-    $stmt = $dbh->prepare($query);
-    $stmt->bindParam(':id_usuario', $insID);
-    $stmt->bindParam(':alumnos_editar', $datos['permisos']['alumnos_editar']);
-    $stmt->bindParam(':administradores_editar', $datos['permisos']['administradores_editar']);
-    $stmt->bindParam(':grupos_editar', $datos['permisos']['grupos_editar']);
-    $stmt->bindParam(':docentes_editar', $datos['permisos']['docentes_editar']);
-    $stmt->bindParam(':categorias_editar', $datos['permisos']['categorias_editar']);
-    $stmt->bindParam(':reactivos_editar', $datos['permisos']['reactivos_editar']);
-    $stmt->execute();
+    $query = "
+      INSERT INTO usuarios (
+        usuario,
+        nombres,
+        apellido_p,
+        apellido_m,
+        password,
+        es_administrador
+      ) VALUES (
+        :usuario,
+        :nombres,
+        :apellido_p,
+        :apellido_m,
+        :password,
+        true
+      )
+    ";
+
+    $insID = parent::consulta($query, [
+      'usuario' => $datos['usuario'],
+      'password' => password_hash($datos['password'], PASSWORD_BCRYPT),
+      'nombres' => $datos['nombres'],
+      'apellido_p' => $datos['apellido_p'],
+      'apellido_m' => $datos['apellido_m']
+    ]);
+
+    $query = "
+      INSERT INTO permisos (
+        id_usuario,
+        alumnos_editar,
+        administradores_editar,
+        grupos_editar,
+        docentes_editar,
+        categorias_editar,
+        reactivos_editar
+      ) VALUES (
+        :id_usuario,
+        :alumnos_editar,
+        :administradores_editar,
+        :grupos_editar,
+        :docentes_editar,
+        :categorias_editar,
+        :reactivos_editar
+      )
+    ";
+
+    parent::consulta($query, [
+      'id_usuario' => $insID,
+      'alumnos_editar' => $datos['permisos']['alumnos_editar'],
+      'administradores_editar' => $datos['permisos']['administradores_editar'],
+      'grupos_editar' => $datos['permisos']['grupos_editar'],
+      'docentes_editar' => $datos['permisos']['docentes_editar'],
+      'categorias_editar' => $datos['permisos']['categorias_editar'],
+      'reactivos_editar' => $datos['permisos']['reactivos_editar']
+    ]);
   }
 
-  public static function editar() {}
+  protected function validarEstructura($arr) {
+    if (
+      !isset($arr['usuario']) ||
+      !isset($arr['password']) ||
+      !isset($arr['nombres']) ||
+      !isset($arr['apellido_p']) ||
+      !isset($arr['apellido_m']) ||
+      !isset($arr['permisos'])
+    ) {
+      throw new Exception('Campos incompletos');
+    }
 
-  public static function remover() {}
-  
-  public static function obtener() {}
-
-  public static function obtenerTodos() {}
+    if (
+      !isset($arr['permisos']['alumnos_editar']) ||
+      !isset($arr['permisos']['administradores_editar']) ||
+      !isset($arr['permisos']['grupos_editar']) ||
+      !isset($arr['permisos']['docentes_editar']) ||
+      !isset($arr['permisos']['categorias_editar']) ||
+      !isset($arr['permisos']['reactivos_editar'])
+    ) {
+      throw new Exception('Campos incompletos');
+    }
+  }
 }
 
 ?>

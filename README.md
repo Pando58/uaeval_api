@@ -1,7 +1,9 @@
 # uaeval_api
-API del sistema de evaluación docente UAEVAL
+API del sistema de evaluación docente para la Universidad Alva Edison.
 
-Recursos
+------------
+
+### **Recursos**
   * /alumnos
   * /administradores
   * /docentes
@@ -13,3 +15,14 @@ Recursos
     - Total de cuestionarios (Numero de alumnos)
     - Numero de cuestionarios completados
     - Numero de cuestionarios sin terminar
+
+------------
+
+### **Métodos**
+Acción | Método HTTP | Ruta
+------ | ----------- | ----
+Crear            | **`POST`**   | `/ruta`
+Obtener (uno)    | **`GET`**    | `/ruta/{id}`
+Obtener (varios) | **`GET`**    | `/ruta`
+Actualizar       | **`PUT`**    | `/ruta/{id}`
+Eliminar         | **`DELETE`** | `/ruta/{id}`
