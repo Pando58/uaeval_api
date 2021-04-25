@@ -2,6 +2,7 @@
 
 include_once '../config/header.php';
 include_once '../clases/cRecurso.php';
+include_once 'auth.php';
 
 $rec = new Recurso($conn->dbh, 'usuarios');
 $rec_perms = new Recurso($conn->dbh, 'permisos');

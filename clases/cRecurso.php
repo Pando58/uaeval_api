@@ -121,6 +121,10 @@ class Recurso {
 
     $datos = $this->limpiarEstructura($datos);
 
+    if (count($datos) == 0) {
+      throw new Exception("No hay ningun dato");
+    }
+
     // Crear string de consulta SQL dinamicamente
     $arrSize = count($datos);
     $i = 0;
@@ -132,7 +136,6 @@ class Recurso {
       $i++;
     }
     $query .= "WHERE $campo = :val";
-
     
     $datosQuery = array_merge($datos, ['val' => $valor]);
     $this->consulta($query, $datosQuery);

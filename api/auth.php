@@ -12,11 +12,13 @@ if ($_SERVER['REQUEST_METHOD'] == "OPTIONS") {
 // No existe el token en el header
 if (!getAuthorizationHeader()) {
   header('HTTP/1.0 400 Bad Request');
+  exit;
 } else {
   $jwt = getBearerToken();
 
   if (!$jwt) {
     header('HTTP/1.0 400 Bad Request');
+    exit;
   } else {
     // Validar token
     try {
@@ -28,6 +30,7 @@ if (!getAuthorizationHeader()) {
     } catch (Exception $e) {
       header('HTTP/1.1 401 Unauthorized');
       echo $e->getMessage();
+      exit;
     }
   }
 }
