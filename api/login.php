@@ -13,6 +13,14 @@ if ($_SERVER['REQUEST_METHOD'] == "OPTIONS") {
 
 try {
 
+  if (
+    !isset($post['usuario']) ||
+    !isset($post['password']) ||
+    !isset($post['admin'])
+  ) {
+    throw new Exception('Campos incompletos', 1);
+  }
+  
   $res = ['token' => login($conn, $post['usuario'], $post['password'], $post['admin'])];
   echo json_encode($res);
 
@@ -31,11 +39,7 @@ try {
   
 }
 
-function login($conn, $user, $pass, $admin) {
-  if (!$user || !$pass) {
-    throw new Exception('Campos incompletos', 1);
-  }
-  
+function login($conn, $user, $pass, $admin) {  
   $usuario = funciones::obtenerUsuario($conn->dbh, $user);
   
   if ($usuario == null) {

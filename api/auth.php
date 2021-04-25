@@ -13,26 +13,25 @@ if ($_SERVER['REQUEST_METHOD'] == "OPTIONS") {
 if (!getAuthorizationHeader()) {
   header('HTTP/1.0 400 Bad Request');
   exit;
-} else {
-  $jwt = getBearerToken();
+}
 
-  if (!$jwt) {
-    header('HTTP/1.0 400 Bad Request');
-    exit;
-  } else {
-    // Validar token
-    try {
-      AuthToken::validarToken($jwt);
+$jwt = getBearerToken();
 
-      header('Content-Type: application/json');
+if (!$jwt) {
+  header('HTTP/1.0 400 Bad Request');
+  exit;
+}
 
-      echo json_encode(AuthToken::obtenerDatosToken($jwt));
-    } catch (Exception $e) {
-      header('HTTP/1.1 401 Unauthorized');
-      echo $e->getMessage();
-      exit;
-    }
-  }
+// Validar token
+try {
+  AuthToken::validarToken($jwt);
+
+  /* header('Content-Type: application/json');
+  echo json_encode(AuthToken::obtenerDatosToken($jwt)); */
+} catch (Exception $e) {
+  header('HTTP/1.1 401 Unauthorized');
+  echo $e->getMessage();
+  exit;
 }
 
 
