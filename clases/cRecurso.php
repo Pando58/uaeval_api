@@ -74,7 +74,6 @@ class Recurso {
 
   public function crear($datos) {
     $datos = $this->validarEstructura($datos);
-
     $datos = $this->limpiarEstructura($datos);
 
     // Crear string de consulta SQL dinamicamente
@@ -100,7 +99,7 @@ class Recurso {
       $i++;
     }
     
-    $this->consulta($query, $datos);
+    return $this->consulta($query, $datos);
   }
 
   public function obtener($id) {
