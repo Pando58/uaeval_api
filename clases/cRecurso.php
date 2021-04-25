@@ -11,7 +11,7 @@ class Recurso {
     $this->estructuras = json_decode(file_get_contents('../config/estructuras.json'), true);
   }
 
-  public function validarEstructura($arr) {
+  private function validarEstructura($arr) {
     $st = $this->estructuras[$this->tabla];
     
     foreach ($st as $key => &$val) {
@@ -21,6 +21,18 @@ class Recurso {
         } else {
           throw new Exception('Campos incompletos');
         }
+      }
+    }
+
+    return $arr;
+  }
+
+  private function limpiarEstructura($arr) {
+    $st = $this->estructuras[$this->tabla];
+
+    foreach ($arr as $key => &$val) {
+      if (!array_key_exists($key, $st)) {
+        unset($arr[$key]);
       }
     }
 
@@ -62,6 +74,8 @@ class Recurso {
 
   public function crear($datos) {
     $datos = $this->validarEstructura($datos);
+
+    $datos = $this->limpiarEstructura($datos);
 
     // Crear string de consulta SQL dinamicamente
     $arrSize = count($datos);
@@ -105,12 +119,8 @@ class Recurso {
 
   public function actualizar($id, $datos) {
     $st = $this->estructuras[$this->tabla];
-    
-    foreach ($datos as $key => &$val) {
-      if (!array_key_exists($key, $st)) {
-        throw new Error('Uno de los campos ingresados no coincide');
-      }
-    }
+
+    $datos = $this->limpiarEstructura($datos);
 
     // Crear string de consulta SQL dinamicamente
     $arrSize = count($datos);

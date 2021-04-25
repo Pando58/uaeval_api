@@ -13,5 +13,13 @@
   "grupos": {},
   "reactivos": {},
   "categorias": {},
-  "permisos": {}
+  "permisos": {
+    "id_usuario": true,
+    "alumnos_editar": true,
+    "administradores_editar": true,
+    "grupos_editar": true,
+    "docentes_editar": true,
+    "categorias_editar": true,
+    "reactivos_editar": true
+  }
 }
