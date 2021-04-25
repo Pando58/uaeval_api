@@ -18,7 +18,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
 
 
   case 'GET': // Obtener alumno/s
-    echo 'GET!';
+    $rec->obtener();
     break;
 
 
