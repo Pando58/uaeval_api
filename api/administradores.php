@@ -1,13 +1,27 @@
 <?php
 
 include_once '../config/header.php';
-include_once '../clases/cAdministradores.php';
+include_once '../clases/cRecurso.php';
 
-$rec = new Administradores($conn->dbh);
+$rec = new Recurso($conn->dbh, 'usuarios');
+
+$post['es_administrador'] = 1;
 
 switch ($_SERVER['REQUEST_METHOD']) {
-  case 'POST': // Crear
+  case 'POST': // Crear    
     try {
+      $rec->crear($post);
+    } catch (Exception $e) {
+      header('HTTP/1.0 400 Bad Request');
+      echo $e->getMessage();
+    }
+
+    exit;
+
+    break;
+    
+    
+/*     try {
       $rec->crear($post['data']);
     } catch (Exception $e) {
       header('HTTP/1.0 400 Bad Request');
@@ -47,29 +61,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
     
   case 'DELETE': // Eliminar
     echo 'DELETE!';
-    break;
+    break; */
 }
-
-
-/* switch ($post['accion']) {
-  case 'agregar':
-    if ($datos['nombre'] == '' || $datos['usuario'] == '' || $datos['password'] == '') {
-      
-      $res['estado'] = 'error';
-      $res['err_id'] = '1';
-      $res['msg'] = 'campos vacios';
-      
-    } else {
-      
-      Administradores::agregar($conn->dbh, $datos);
-      
-      $res['estado'] = 'ok';
-      $res['msg'] = 'Alumno agregado';
-
-    }
-    
-    echo json_encode($res);
-    break;
-} */
 
 ?>

@@ -1,0 +1,17 @@
+{
+  "usuarios": {
+    "usuario": true,
+    "password": true,
+    "nombres": true,
+    "apellido_p": "",
+    "apellido_m": "",
+    "es_administrador": true,
+    "id_grupo": null,
+    "respuestas": null
+  },
+  "docentes": {},
+  "grupos": {},
+  "reactivos": {},
+  "categorias": {},
+  "permisos": {}
+}

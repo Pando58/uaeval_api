@@ -92,7 +92,7 @@ class Administradores extends Recurso {
     parent::consulta($query, ['id' => $id]);
   }
 
-  protected function validarEstructura($arr) {
+  public function validarEstructura($arr) {
     if (
       !isset($arr['usuario']) ||
       !isset($arr['password']) ||
