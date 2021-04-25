@@ -105,7 +105,11 @@ class Recurso {
 
   public function actualizar() {}
 
-  public function eliminar() {}
+  public function eliminar($id) {
+    $query = "DELETE FROM $this->tabla WHERE id = :id";
+
+    $this->consulta($query, ['id' => $id]);
+  }
 }
 
 ?>

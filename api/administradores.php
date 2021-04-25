@@ -46,12 +46,25 @@ switch ($_SERVER['REQUEST_METHOD']) {
 
     }
     
-    break;
+    break; */
 
     
   case 'DELETE': // Eliminar
-    echo 'DELETE!';
-    break; */
+    if (!isset($_GET['id'])) {
+      header('HTTP/1.0 400 Bad Request');
+      echo 'No existe un id';
+    } else {
+
+      try {
+        $rec->eliminar($_GET['id']);
+      } catch (Exception $e) {
+        header('HTTP/1.0 400 Bad Request');
+        echo $e->getMessage();
+      }
+
+    }
+
+    break;
 }
 
 ?>
