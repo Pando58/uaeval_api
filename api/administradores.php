@@ -19,16 +19,6 @@ switch ($_SERVER['REQUEST_METHOD']) {
     exit;
 
     break;
-    
-    
-/*     try {
-      $rec->crear($post['data']);
-    } catch (Exception $e) {
-      header('HTTP/1.0 400 Bad Request');
-      echo $e->getMessage();
-    }
-
-    break;
 
 
   case 'GET': // Obtener alumno/s
@@ -41,7 +31,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
     break;
 
 
-  case 'PUT': // Actualizar
+  /* case 'PUT': // Actualizar
     if (!isset($_GET['id'])) {
       header('HTTP/1.0 400 Bad Request');
       echo 'No existe un id';

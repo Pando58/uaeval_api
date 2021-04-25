@@ -89,9 +89,19 @@ class Recurso {
     $this->consulta($query, $datos);
   }
 
-  public function obtener() {}
+  public function obtener($id) {
+    header('Content-Type: application/json');
 
-  public function obtenerTodos() {}
+    $query = "SELECT * FROM $this->tabla WHERE id = :id";
+    echo json_encode($this->consultaDevolver($query, ['id' => $id]));
+  }
+
+  public function obtenerTodos() {
+    header('Content-Type: application/json');
+    
+    $query = "SELECT * FROM $this->tabla";
+    echo json_encode($this->consultaDevolver($query));
+  }
 
   public function actualizar() {}
 
