@@ -102,21 +102,21 @@ class Recurso {
     return $this->consulta($query, $datos);
   }
 
-  public function obtener($id) {
+  public function obtener($campo, $valor) {
     header('Content-Type: application/json');
 
-    $query = "SELECT * FROM $this->tabla WHERE id = :id";
-    echo json_encode($this->consultaDevolver($query, ['id' => $id]));
+    $query = "SELECT * FROM $this->tabla WHERE $campo = :val";
+    return $this->consultaDevolver($query, ['val' => $valor]);
   }
 
   public function obtenerTodos() {
     header('Content-Type: application/json');
     
     $query = "SELECT * FROM $this->tabla";
-    echo json_encode($this->consultaDevolver($query));
+    return $this->consultaDevolver($query);
   }
 
-  public function actualizar($id, $datos) {
+  public function actualizar($campo, $valor, $datos) {
     $st = $this->estructuras[$this->tabla];
 
     $datos = $this->limpiarEstructura($datos);
@@ -131,17 +131,17 @@ class Recurso {
       $query .= ($i < $arrSize - 1) ? ', ' : ' ';
       $i++;
     }
-    $query .= "WHERE id = :id";
+    $query .= "WHERE $campo = :val";
 
     
-    $datosQuery = array_merge($datos, ['id' => $id]);
+    $datosQuery = array_merge($datos, ['val' => $valor]);
     $this->consulta($query, $datosQuery);
   }
 
-  public function eliminar($id) {
-    $query = "DELETE FROM $this->tabla WHERE id = :id";
+  public function eliminar($campo, $valor) {
+    $query = "DELETE FROM $this->tabla WHERE $campo = :val";
 
-    $this->consulta($query, ['id' => $id]);
+    $this->consulta($query, ['val' => $valor]);
   }
 }
 

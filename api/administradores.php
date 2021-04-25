@@ -40,9 +40,9 @@ switch ($_SERVER['REQUEST_METHOD']) {
 
   case 'GET': // Obtener alumno/s
     if (isset($_GET['id'])) {
-      $rec->obtener($_GET['id']);
+      echo json_encode($rec->obtener('id', $_GET['id']));
     } else {
-      $rec->obtenerTodos();
+      echo json_encode($rec->obtenerTodos());
     }
 
     break;
@@ -59,7 +59,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
     } else {
 
       try {
-        $rec->actualizar($_GET['id'], $post ?? []);
+        $rec->actualizar('id', $_GET['id'], $post ?? []);
       } catch (Exception $e) {
         header('HTTP/1.0 400 Bad Request');
         echo $e->getMessage();
@@ -76,8 +76,17 @@ switch ($_SERVER['REQUEST_METHOD']) {
       echo 'No existe un id';
     } else {
 
+      // Eliminar usuario
       try {
-        $rec->eliminar($_GET['id']);
+        $rec->eliminar('id', $_GET['id']);
+      } catch (Exception $e) {
+        header('HTTP/1.0 400 Bad Request');
+        echo $e->getMessage();
+      }
+
+      // Eliminar entrada en permisos
+      try {
+        $rec_perms->eliminar('id_usuario', $_GET['id']);
       } catch (Exception $e) {
         header('HTTP/1.0 400 Bad Request');
         echo $e->getMessage();

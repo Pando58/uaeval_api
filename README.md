@@ -5,12 +5,14 @@ API del sistema de evaluación docente para la Universidad Alva Edison.
 
 ### **Recursos**
   * /alumnos
+  * /administradores
+    - **[`POST`]** Crear permisos
+    - **[`DELETE`]** Eliminar permisos
+  * /permisos **[`GET, PUT`]**
   * /docentes
   * /grupos
   * /reactivos
   * /categorias
-  * /administradores
-  * /permisos
   <!--  -->
   * /cuestionarios **[`GET`]**
     - Total de cuestionarios (Numero de alumnos)
