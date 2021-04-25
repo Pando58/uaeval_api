@@ -18,7 +18,11 @@ switch ($_SERVER['REQUEST_METHOD']) {
 
 
   case 'GET': // Obtener alumno/s
-    $rec->obtener();
+    if (isset($_GET['id'])) {
+      $rec->obtener($_GET['id']);
+    } else {
+      $rec->obtenerTodos();
+    }
     break;
 
 

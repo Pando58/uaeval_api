@@ -63,10 +63,20 @@ class Administradores extends Recurso {
     ]);
   }
 
-  public function obtener() {
-    parent::obtener();
+  public function obtenerTodos() {
+    header('Content-Type: application/json');
+
+    $query = "SELECT * FROM usuarios WHERE es_administrador = 1";
     
-    echo json_encode(parent::consultaDevolver("SELECT * FROM usuarios WHERE es_administrador = 1"));
+    echo json_encode(parent::consultaDevolver($query));
+  }
+
+  public function obtener($id) {
+    header('Content-Type: application/json');
+
+    $query = "SELECT * FROM usuarios WHERE es_administrador = 1 AND id = :id";
+
+    echo json_encode(parent::consultaDevolver($query, ['id' => $id]));
   }
 
   protected function validarEstructura($arr) {

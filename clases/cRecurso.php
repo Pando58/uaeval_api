@@ -5,17 +5,7 @@ abstract class Recurso {
   
   public function __construct($dbh) {
     $this->dbh = $dbh;
-  }  
-  
-  public function crear($datos) {}
-  public function obtener() {
-    header('Content-Type: application/json');
   }
-  public function obtenerTodos() {
-    header('Content-Type: application/json');
-  }
-  public function editar() {}
-  public function remover() {}
 
   protected function consulta($query, $campos) {
     $stmt = $this->dbh->prepare($query);
@@ -47,8 +37,6 @@ abstract class Recurso {
 
     return $res;
   }
-
-  protected function validarEstructura($arr) {}
 }
 
 ?>
