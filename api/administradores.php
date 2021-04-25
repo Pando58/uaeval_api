@@ -5,10 +5,14 @@ include_once '../clases/cRecurso.php';
 
 $rec = new Recurso($conn->dbh, 'usuarios');
 
-$post['es_administrador'] = 1;
-
 switch ($_SERVER['REQUEST_METHOD']) {
-  case 'POST': // Crear    
+  case 'POST': // Crear
+    $post['es_administrador'] = 1;
+
+    if (isset($post['password'])) {
+      $post['password'] = password_hash($post['password'], PASSWORD_BCRYPT);
+    }
+
     try {
       $rec->crear($post);
     } catch (Exception $e) {
@@ -31,7 +35,11 @@ switch ($_SERVER['REQUEST_METHOD']) {
     break;
 
 
-  /* case 'PUT': // Actualizar
+  case 'PUT': // Actualizar
+    if (isset($post['password'])) {
+      $post['password'] = password_hash($post['password'], PASSWORD_BCRYPT);
+    }
+
     if (!isset($_GET['id'])) {
       header('HTTP/1.0 400 Bad Request');
       echo 'No existe un id';
@@ -46,7 +54,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
 
     }
     
-    break; */
+    break;
 
     
   case 'DELETE': // Eliminar
