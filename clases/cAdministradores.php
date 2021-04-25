@@ -52,22 +52,14 @@ class Administradores extends Recurso {
       )
     ";
 
-    parent::consulta($query, [
-      'id_usuario' => $insID,
-      'alumnos_editar' => $datos['permisos']['alumnos_editar'],
-      'administradores_editar' => $datos['permisos']['administradores_editar'],
-      'grupos_editar' => $datos['permisos']['grupos_editar'],
-      'docentes_editar' => $datos['permisos']['docentes_editar'],
-      'categorias_editar' => $datos['permisos']['categorias_editar'],
-      'reactivos_editar' => $datos['permisos']['reactivos_editar']
-    ]);
+    $datosQuery = array_merge(['id_usuario' => $insID], $datos['permisos']);
+    parent::consulta($query, $datosQuery);
   }
 
   public function obtenerTodos() {
     header('Content-Type: application/json');
-
-    $query = "SELECT * FROM usuarios WHERE es_administrador = 1";
     
+    $query = "SELECT * FROM usuarios WHERE es_administrador = 1";
     echo json_encode(parent::consultaDevolver($query));
   }
 
@@ -75,8 +67,29 @@ class Administradores extends Recurso {
     header('Content-Type: application/json');
 
     $query = "SELECT * FROM usuarios WHERE es_administrador = 1 AND id = :id";
-
     echo json_encode(parent::consultaDevolver($query, ['id' => $id]));
+  }
+
+  public function actualizar($id, $datos) {
+    $query = "UPDATE usuarios SET ";
+    foreach ($datos as $k => &$v) {
+      $query .= "$k = :$k";
+      $query .= ($v != end($datos)) ? ', ' : ' ';
+    }
+    $query .= "WHERE id = :id";
+
+    if (isset($datos['password'])) {
+      $datos['password'] = password_hash($datos['password'], PASSWORD_BCRYPT);
+    }
+
+    $datosQuery = array_merge($datos, ['id' => $id]);
+    parent::consulta($query, $datosQuery);
+  }
+
+  public function eliminar($id) {
+    $query = "DELETE FROM usuarios WHERE id = :id";
+
+    parent::consulta($query, ['id' => $id]);
   }
 
   protected function validarEstructura($arr) {

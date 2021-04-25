@@ -23,11 +23,25 @@ switch ($_SERVER['REQUEST_METHOD']) {
     } else {
       $rec->obtenerTodos();
     }
+
     break;
 
 
   case 'PUT': // Actualizar
-    echo 'PUT!';
+    if (!isset($_GET['id'])) {
+      header('HTTP/1.0 400 Bad Request');
+      echo 'No existe un id';
+    } else {
+
+      try {
+        $rec->actualizar($_GET['id'], $post ?? []);
+      } catch (Exception $e) {
+        header('HTTP/1.0 400 Bad Request');
+        echo $e->getMessage();
+      }
+
+    }
+    
     break;
 
     
