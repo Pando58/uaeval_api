@@ -41,9 +41,9 @@ switch ($_SERVER['REQUEST_METHOD']) {
 
   case 'GET': // Obtener alumno/s
     if (isset($_GET['id'])) {
-      echo json_encode($rec->obtener('id', $_GET['id']));
+      echo json_encode($rec->obtener(['id' => $_GET['id'], 'es_administrador' => 1]));
     } else {
-      echo json_encode($rec->obtenerTodos());
+      echo json_encode($rec->obtener(['es_administrador' => 1]));
     }
 
     break;

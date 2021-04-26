@@ -102,18 +102,32 @@ class Recurso {
     return $this->consulta($query, $datos);
   }
 
-  public function obtener($campo, $valor) {
+  /* public function obtener($campo, $valor, $filtro = []) {
     header('Content-Type: application/json');
 
     $query = "SELECT * FROM $this->tabla WHERE $campo = :val";
     return $this->consultaDevolver($query, ['val' => $valor]);
-  }
+  } */
 
-  public function obtenerTodos() {
+  public function obtener($filtros = []) {
     header('Content-Type: application/json');
     
     $query = "SELECT * FROM $this->tabla";
-    return $this->consultaDevolver($query);
+
+    if (count($filtros) > 0) {
+      $arrSize = count($filtros);
+      $i = 0;
+      
+      $query .= " WHERE ";
+      
+      foreach ($filtros as $key => &$val) {
+        $query .= "$key = :$key";
+        $query .= ($i < $arrSize - 1) ? ' AND ' : '';
+        $i++;
+      }
+    }
+
+    return $this->consultaDevolver($query, $filtros);
   }
 
   public function actualizar($campo, $valor, $datos) {
