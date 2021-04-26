@@ -14,11 +14,14 @@ if ($_SERVER['REQUEST_METHOD'] == "OPTIONS") {
 try {
 
   if (
-    !isset($post['usuario']) ||
-    !isset($post['password']) ||
-    !isset($post['admin'])
+    !$post['usuario'] ||
+    !$post['password']
   ) {
     throw new Exception('Campos incompletos', 1);
+  }
+
+  if (!isset($post['admin'])) {
+    throw new Exception('No existe la propiedad administrador', 4);
   }
   
   $res = ['token' => login($conn, $post['usuario'], $post['password'], $post['admin'])];
@@ -61,7 +64,7 @@ function login($conn, $user, $pass, $admin) {
     'nombres' => $usuario['nombres'],
     'apellido_p' => $usuario['apellido_p'],
     'apellido_m' => $usuario['apellido_m'],
-    'admin' => $usuario['es_administrador']
+    'admin' => (int)$usuario['es_administrador']
   ]);
 }
 

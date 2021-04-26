@@ -6,7 +6,7 @@ class AuthToken {
   private static $key = 'unialvae';
   private static $encrypt = ['HS256'];
   private static $aud = null;
-  private static $exp = (60 * 60);
+  private static $exp = (60 * 60 * 24);
 
   public static function generarToken($datos) {
     $t = time();
