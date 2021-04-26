@@ -4,6 +4,12 @@ include_once '../config/header.php';
 include_once '../clases/cRecurso.php';
 include_once 'auth.php';
 
+if (AuthToken::obtenerDatosToken($jwt)->data->admin != 1) {
+  header('HTTP/1.1 401 Unauthorized');
+  echo 'No hay suficientes permisos';
+  exit;
+}
+
 $rec = new Recurso($conn->dbh, 'usuarios');
 
 switch ($_SERVER['REQUEST_METHOD']) {
@@ -31,9 +37,9 @@ switch ($_SERVER['REQUEST_METHOD']) {
 
   case 'GET': // Obtener alumno/s
     if (isset($_GET['id'])) {
-      echo json_encode($rec->obtener('id', $_GET['id']));
+      echo json_encode($rec->obtener(['id' => $_GET['id'], 'es_administrador' => 0]));
     } else {
-      echo json_encode($rec->obtenerTodos());
+      echo json_encode($rec->obtener(['es_administrador' => 0]));
     }
 
     break;

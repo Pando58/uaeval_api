@@ -58,6 +58,9 @@ function login($conn, $user, $pass, $admin) {
   return AuthToken::generarToken([
     'id' => $usuario['id'],
     'usuario' => $usuario['usuario'],
+    'nombres' => $usuario['nombres'],
+    'apellido_p' => $usuario['apellido_p'],
+    'apellido_m' => $usuario['apellido_m'],
     'admin' => $usuario['es_administrador']
   ]);
 }
