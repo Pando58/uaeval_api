@@ -12,6 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] == "OPTIONS") {
 // No existe el token en el header
 if (!getAuthorizationHeader()) {
   header('HTTP/1.0 400 Bad Request');
+  echo 'no se encontro pedido de autorizacion';
   exit;
 }
 
@@ -19,6 +20,7 @@ $jwt = getBearerToken();
 
 if (!$jwt) {
   header('HTTP/1.0 400 Bad Request');
+  echo 'no se encontro el token';
   exit;
 }
 
