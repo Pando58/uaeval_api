@@ -16,6 +16,8 @@ switch ($_SERVER['REQUEST_METHOD']) {
   case 'POST': // Crear
     $post['es_administrador'] = 0;
 
+    $post['password'] = '';
+
     /* if (isset($post['password'])) {
       $post['password'] = password_hash($post['password'], PASSWORD_BCRYPT);
     } */
