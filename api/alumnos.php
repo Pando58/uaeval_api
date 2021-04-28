@@ -16,16 +16,14 @@ switch ($_SERVER['REQUEST_METHOD']) {
   case 'POST': // Crear
     $post['es_administrador'] = 0;
 
-    if (isset($post['password'])) {
+    /* if (isset($post['password'])) {
       $post['password'] = password_hash($post['password'], PASSWORD_BCRYPT);
-    }
-
-    $insID;
+    } */
     
     // Crear usuario
     try {
       // Almacenar el id insertado para ponerlo en la tabla de permisos
-      $insID = $rec->crear($post);
+      $rec->crear($post);
     } catch (Exception $e) {
       header('HTTP/1.0 400 Bad Request');
       echo $e->getMessage();
@@ -46,7 +44,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
 
 
   case 'PUT': // Actualizar
-    if (isset($post['password'])) {
+    if (isset($post['password']) && $post['password'] !== '') {
       $post['password'] = password_hash($post['password'], PASSWORD_BCRYPT);
     }
 
