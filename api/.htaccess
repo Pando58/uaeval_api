@@ -10,4 +10,4 @@ RewriteRule ^([^\.]+)$ $1.php [NC,L]
 # Si la ruta no existe devolver al index
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^(.+?)/?$ api/404.php?url=$1 [L,QSA]
+RewriteRule ^(.+?)/?$ ../404.php?url=$1 [L,QSA]

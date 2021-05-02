@@ -1,7 +1,6 @@
 <?php
 
 require_once '../config/header.php';
-require_once '../clases/status.php';
 
 // Evitar error de CORS
 if ($_SERVER['REQUEST_METHOD'] == "OPTIONS") {

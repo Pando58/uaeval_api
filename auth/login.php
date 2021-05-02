@@ -1,7 +1,6 @@
 <?php
 
 require_once '../config/header.php';
-require_once '../clases/status.php';
 
 header('Content-Type: application/json');
 
