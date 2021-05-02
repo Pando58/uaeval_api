@@ -12,7 +12,9 @@
   "docentes": {},
   "grupos": {},
   "reactivos": {},
-  "categorias": {},
+  "categorias": {
+    "categoria": true
+  },
   "permisos": {
     "id_usuario": true,
     "alumnos_editar": true,

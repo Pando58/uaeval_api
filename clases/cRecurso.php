@@ -1,5 +1,38 @@
 <?php
 
+/*
+
+En el archivo estructuras.json se definen los campos que debe recibir la API
+Dentro del primer nivel se encuentra el nombre de los recursos:
+
+  {
+    "usuarios": {...},
+    "reactivos": {...},
+    "categorias": {...},
+    ...
+  }
+
+En el segundo nivel estan los campos del recurso:
+
+  {
+    "usuarios": {
+      "usuario": ...,
+      "password": ...,
+      "nombres": ...,
+      ...
+    },
+    ...
+  }
+
+Si el valor de un campo es TRUE, significa que es obligatorio
+Si es cualquier otro tipo que no sea booleano, sera su valor por defecto en caso de no ser especificado
+
+Esto es posible debido a que MySQL maneja los booleanos como 1 y 0 (TinyINT) en vez de TRUE o FALSE (en realidad BOOL no existe en MySQL)
+Dejando libre un tipo de dato para hacer la verificacion de si el campo es requerido
+Y evitar que el archivo se vuelva complejo creando otro nivel en la estructura
+
+*/
+
 class Recurso {
   private $dbh;
   private $tabla;
