@@ -10,7 +10,7 @@ include_once 'auth.php';
   exit;
 } */
 
-$rec = new Recurso($conn->dbh, 'categorias');
+$rec = new Recurso($conn->dbh, 'docentes');
 
 switch ($_SERVER['REQUEST_METHOD']) {
   case 'POST':

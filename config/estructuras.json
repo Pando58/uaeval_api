@@ -21,8 +21,7 @@
   },
   "reactivos": {
     "reactivo": true,
-    "id_categoria": true,
-    "numero": null
+    "id_categoria": true
   },
   "categorias": {
     "categoria": true
