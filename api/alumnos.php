@@ -17,14 +17,8 @@ switch ($_SERVER['REQUEST_METHOD']) {
     $post['es_administrador'] = 0;
 
     $post['password'] = '';
-
-    /* if (isset($post['password'])) {
-      $post['password'] = password_hash($post['password'], PASSWORD_BCRYPT);
-    } */
     
-    // Crear usuario
     try {
-      // Almacenar el id insertado para ponerlo en la tabla de permisos
       $rec->crear($post);
     } catch (Exception $e) {
       header('HTTP/1.0 400 Bad Request');

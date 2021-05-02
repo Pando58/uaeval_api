@@ -9,9 +9,21 @@
     "id_grupo": null,
     "respuestas": null
   },
-  "docentes": {},
-  "grupos": {},
-  "reactivos": {},
+  "docentes": {
+    "nombres": true,
+    "apellido_p": true,
+    "apellido_m": true
+  },
+  "grupos": {
+    "grupo": true,
+    "id_docentes": true,
+    "nombres_anteriores": "{}"
+  },
+  "reactivos": {
+    "reactivo": true,
+    "id_categoria": true,
+    "numero": null
+  },
   "categorias": {
     "categoria": true
   },
