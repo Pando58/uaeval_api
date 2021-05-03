@@ -13,6 +13,8 @@ if ($_SERVER['REQUEST_METHOD'] == "OPTIONS") {
 try {
 
   if (
+    !isset($post['usuario']) ||
+    !isset($post['password']) ||
     !$post['usuario'] ||
     !$post['password']
   ) {
@@ -20,7 +22,7 @@ try {
   }
 
   if (!isset($post['admin'])) {
-    throw new Exception('No existe la propiedad administrador', 4);
+    throw new Exception('No existe la propiedad administrador', 3);
   }
   
   $res = ['token' => login($conn, $post['usuario'], $post['password'], $post['admin'])];
@@ -53,7 +55,7 @@ function login($conn, $user, $pass, $admin) {
   }
 
   if ($admin != $usuario['es_administrador']) {
-    throw new Exception('La propiedad de administrador no coincide', 4);
+    throw new Exception('La propiedad de administrador no coincide', 3);
   }
 
   // Login valido - enviar token
