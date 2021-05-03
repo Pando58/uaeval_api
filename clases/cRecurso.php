@@ -106,6 +106,10 @@ class Recurso {
   // ACCIONES
 
   public function crear($datos) {
+    if (!isset($datos)) {
+      throw new Exception('Campos incompletos');
+    }
+
     $datos = $this->validarEstructura($datos);
     $datos = $this->limpiarEstructura($datos);
 
@@ -135,13 +139,6 @@ class Recurso {
     return $this->consulta($query, $datos);
   }
 
-  /* public function obtener($campo, $valor, $filtro = []) {
-    header('Content-Type: application/json');
-
-    $query = "SELECT * FROM $this->tabla WHERE $campo = :val";
-    return $this->consultaDevolver($query, ['val' => $valor]);
-  } */
-
   public function obtener($filtros = []) {
     header('Content-Type: application/json');
     
@@ -164,6 +161,10 @@ class Recurso {
   }
 
   public function actualizar($campo, $valor, $datos) {
+    if (!isset($datos)) {
+      throw new Exception('Campos incompletos');
+    }
+    
     $st = $this->estructuras[$this->tabla];
 
     $datos = $this->limpiarEstructura($datos);
