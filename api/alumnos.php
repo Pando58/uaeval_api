@@ -4,11 +4,11 @@ include_once '../config/header.php';
 include_once '../clases/cRecurso.php';
 include_once '../auth/auth.php';
 
-if (AuthToken::obtenerDatosToken($jwt)->data->admin != 1) {
+/* if (AuthToken::obtenerDatosToken($jwt)->data->admin != 1) {
   header('HTTP/1.1 401 Unauthorized');
   echo 'No hay suficientes permisos';
   exit;
-}
+} */
 
 $rec = new Recurso($conn->dbh, 'usuarios');
 
