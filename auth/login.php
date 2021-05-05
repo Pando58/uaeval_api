@@ -60,12 +60,13 @@ function login($conn, $user, $pass, $admin) {
 
   // Login valido - enviar token
   return AuthToken::generarToken([
-    'id' => $usuario['id'],
+    'id' => (int)$usuario['id'],
     'usuario' => $usuario['usuario'],
     'nombres' => $usuario['nombres'],
     'apellido_p' => $usuario['apellido_p'],
     'apellido_m' => $usuario['apellido_m'],
-    'admin' => (int)$usuario['es_administrador']
+    'admin' => (int)$usuario['es_administrador'],
+    'id_grupo' => (int)$usuario['id_grupo']
   ]);
 }
 
