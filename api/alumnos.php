@@ -17,6 +17,12 @@ switch ($_SERVER['REQUEST_METHOD']) {
     $post['es_administrador'] = 0;
 
     $post['password'] = '';
+
+    if (!isset($post['id_grupo'])) {
+      header('HTTP/1.0 400 Bad Request');
+      echo 'Campos incompletos';
+      exit;
+    }
     
     try {
       $rec->crear($post);
