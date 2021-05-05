@@ -66,7 +66,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
     } else {
 
       try {
-        $rec->actualizar('id', $_GET['id'], $post ?? []);
+        $rec->actualizar('id', $_GET['id'], $post);
       } catch (Exception $e) {
         header('HTTP/1.0 400 Bad Request');
         echo $e->getMessage();
