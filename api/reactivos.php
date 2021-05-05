@@ -10,28 +10,6 @@ include_once '../auth/auth.php';
   exit;
 } */
 
-if (($gestor = fopen("alumnos.csv", "r")) !== false) {
-
-  while (($datos = fgetcsv($gestor, 1000, ",")) !== false) {
-    $query = "INSERT INTO usuarios (usuario, nombres, id_grupo) VALUES (:a, :b, :c)";
-    hacerConsulta($conn->dbh, $query, $datos);
-  }
-
-  fclose($gestor);
-}
-
-function hacerConsulta($conn, $query, $datos) {
-  $stmt = $conn->prepare($query);
-
-  $stmt->bindParam(':a', $datos[0]);
-  $stmt->bindParam(':b', $datos[1]);
-  $stmt->bindParam(':c', $datos[2]);
-
-  $stmt->execute();
-}
-
-exit;
-
 $rec = new Recurso($conn->dbh, 'reactivos');
 
 switch ($_SERVER['REQUEST_METHOD']) {
