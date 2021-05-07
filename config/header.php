@@ -1,8 +1,10 @@
 <?php
 
-header('Access-Control-Allow-Origin: http://localhost:3000');
+$conf = json_decode(file_get_contents('../config/server_config.json'));
+
+header("Access-Control-Allow-Origin: " . ($conf->cors ?? 'http://localhost:3000'));
 header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept, Authorization");
-header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
+header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
 
 require_once '../vendor/autoload.php';
 include_once '../clases/funciones.php';
