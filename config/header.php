@@ -3,7 +3,7 @@
 $conf = json_decode(file_get_contents('../config/server_config.json'));
 
 header("Access-Control-Allow-Origin: " . ($conf->cors ?? 'http://localhost:3000'));
-header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept, Authorization");
+header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept, Authorization, pragma, cache-control");
 header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
 
 require_once '../vendor/autoload.php';
