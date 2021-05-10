@@ -97,12 +97,12 @@ class Recurso {
     $res = [];
 
     while($row = $stmt->fetch(PDO::FETCH_OBJ)) {
-      $obj = [];
+      /* $obj = [];
       foreach ($row as $key => &$val) {
         $obj[$key] = preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $val);
-      }
+      } */
 
-      array_push($res, $obj);
+      array_push($res, $row);
     }
     return $res;
   }

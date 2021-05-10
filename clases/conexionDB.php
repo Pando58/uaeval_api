@@ -15,7 +15,7 @@ class ConexionDB {
     $this->pass = $conf->pass ?? '';
     $this->db = $conf->db ?? 'uaeval';
 
-    $this->dbh = new PDO('mysql:host='.$this->server.';dbname='.$this->db, $this->user, $this->pass);
+    $this->dbh = new PDO('mysql:host='.$this->server.';dbname='.$this->db.';charset=utf8mb4', $this->user, $this->pass);
     $this->dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
   }
 }
